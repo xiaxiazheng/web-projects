@@ -2,7 +2,8 @@
   "name": "web-projects",
   "private": true,
   "scripts": {
-    "dev:next": "pnpm --filter next-app-new dev",
+    "dev:next": "pnpm --filter next-app dev",
+    "dev:next:local": "pnpm --filter next-app dev:local",
     "dev:react": "pnpm --filter reactblog dev",
     "build:blog": "pnpm --filter blog-libs build",
     "build:all": "pnpm -r build"
