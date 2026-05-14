@@ -4,38 +4,43 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Workspace Structure
 
-This is a pnpm workspace with three projects:
+This is a pnpm workspace containing five projects across four separate git repositories:
 
 ```
-web-projects/
-├── blog-libs/      # Shared component/fetch/hook library
-├── next-app/       # Next.js 16 app (Turbopack by default)
-└── reactblog/      # Rspack-based React app
+web-projects/                    # pnpm workspace root (1 git repo: web-projects)
+├── apps/
+│   ├── next-app/               # Next.js 16 app (1 git repo: next-app)
+│   ├── reactblog/              # Rspack-based React app (1 git repo: reactblog)
+│   └── blog-deploy/            # Static deploy (1 git repo: blog-deploy)
+└── packages/
+    └── blog-libs/              # Shared component/fetch/hook library (1 git repo: blog-libs)
 ```
+
+**Important**: Each sub-project (next-app, reactblog, blog-libs, blog-deploy) is its own git repository. Git operations (`git add`, `git commit`, `git push`) must be executed **within each project's directory** or using `git -C <path>`.
 
 ## Commands
 
-### Root level
+### Root level (web-projects workspace)
 ```bash
 pnpm install              # Install all workspace dependencies
 pnpm -r build            # Build all packages
-pnpm -r --parallel dev    # Dev all packages in parallel
+pnpm -r --parallel dev   # Dev all packages in parallel
 ```
 
-### blog-libs
+### packages/blog-libs
 ```bash
 pnpm --filter @xiaxiazheng/blog-libs build   # Build the library
 pnpm --filter @xiaxiazheng/blog-libs watch    # Watch mode for development
 ```
 
-### next-app (Next.js 16 with Turbopack)
+### apps/next-app (Next.js 16 with Turbopack)
 ```bash
 pnpm --filter next-app dev     # Development server at localhost:3000/m
 pnpm --filter next-app build   # Production build
 pnpm --filter next-app lint    # ESLint
 ```
 
-### reactblog (Rspack)
+### apps/reactblog (Rspack)
 ```bash
 pnpm --filter reactblog dev          # Dev server
 pnpm --filter reactblog build        # Production build
@@ -43,14 +48,17 @@ pnpm --filter reactblog devLocal     # Dev with localhost config
 pnpm --filter reactblog buildLocal   # Build with localhost config
 ```
 
+### apps/blog-deploy
+Static deployment files, no dev commands.
+
 ## Architecture
 
 ### blog-libs
 Shared library built with rslib. Exports:
 - **Components**: todo-item, todo-tree, todo-form, markdown-show, img-show-modal, loading, etc.
 - **Hooks**: `useSettingsContext`, `useSettings`
-- **Fetch modules**: todo, blog, home, media, note, settings, etc.
-- **Utils**: types, todo utilities, concurrent helpers
+- **Fetch modules**: todo, blog, home, media, note, settings, folder, etc.
+- **Utils**: types, todo utilities, concurrent helpers, mermaidPlugin
 
 Exports via `src/index.tsx`. Build output goes to `dist/`.
 
@@ -67,14 +75,36 @@ Rspack-based React app. Uses:
 - Redux/Rematch for state
 - Ant Design v6
 
+### blog-deploy
+Static site deployment with HTML/JS/CSS assets.
+
 ## Workspace Dependencies
 
-Both `next-app` and `reactblog` use `workspace:*` protocol to reference blog-libs:
+`next-app` and `reactblog` use `workspace:*` protocol to reference blog-libs:
 ```json
 "@xiaxiazheng/blog-libs": "workspace:*"
 ```
 
-pnpm symlinks this to `node_modules/@xiaxiazheng/blog-libs -> blog-libs`.
+pnpm symlinks this to `node_modules/@xiaxiazheng/blog-libs -> packages/blog-libs`.
+
+## Git Workflow
+
+Since each project is a separate git repository, when making changes:
+
+1. **Commit to each sub-project** (next-app, reactblog, blog-libs, blog-deploy):
+   ```bash
+   git -C apps/next-app add .
+   git -C apps/next-app commit -m "message"
+   git -C apps/next-app push
+   # repeat for each project
+   ```
+
+2. **Commit to web-projects workspace** (pnpm-workspace.yaml, CLAUDE.md changes):
+   ```bash
+   git add .
+   git commit -m "message"
+   git push
+   ```
 
 ## Important Notes
 
