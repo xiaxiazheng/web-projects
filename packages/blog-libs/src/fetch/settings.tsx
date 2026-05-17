@@ -36,3 +36,8 @@ export async function deleteSettings(params: {
     const data = await postFetch(`/settings/deleteSettings`, params);
     return data && data.resultsCode === "success" ? true : false;
 }
+
+export async function getSSLCertExpiry(): Promise<any> {
+    const data = await getFetch(`/settings/ssl-cert-expiry`);
+    return data && data.resultsCode === "success" ? data.data : false;
+}

@@ -6,6 +6,7 @@ import { ExportOutlined } from "@ant-design/icons";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 import { ThemeContext } from "@/context/ThemeContext";
 import { getAlreadyDate } from "./utils";
+import { getSSLCertExpiry } from "@xiaxiazheng/blog-libs";
 import MusicPlayerInHeader from "../music-player-in-header";
 import TranslateInHeader from "../translate-in-header";
 import QuickDecisionInHeader from "../quick-decision-in-header";
@@ -25,6 +26,8 @@ const HeaderAdmin: React.FC<PropsType> = (props) => {
     const [alreadyDays, setAlreadyDays] = useState<string | number>();
     const [nextDays, setNextDays] = useState<string | number>();
     const [nextBirthday, setNextBirthday] = useState<string | number>();
+    const [certExpiry, setCertExpiry] = useState<string | number>();
+    const [certExpiryDate, setCertExpiryDate] = useState<string>();
 
     useEffect(() => {
         const obj = getAlreadyDate();
@@ -32,6 +35,15 @@ const HeaderAdmin: React.FC<PropsType> = (props) => {
         setAlreadyDays(obj.days);
         setNextDays(obj.next);
         setNextBirthday(obj.nextBirthday);
+    }, []);
+
+    useEffect(() => {
+        getSSLCertExpiry().then((res) => {
+            if (res) {
+                setCertExpiry(res.dayRemaining);
+                setCertExpiryDate(res.certExpiry);
+            }
+        });
     }, []);
 
     /** 点击切换主题 */
@@ -134,6 +146,8 @@ const HeaderAdmin: React.FC<PropsType> = (props) => {
                                         ? "今天是小猪生日"
                                         : `小猪下次生日还有 ${nextBirthday} 天`}
                                 </div>
+                                <div>证书有效期：{certExpiry} 天</div>
+                                <div>证书失效时间：{certExpiryDate}</div>
                             </div>
                         }
                     >
@@ -150,7 +164,8 @@ const HeaderAdmin: React.FC<PropsType> = (props) => {
                             {nextDays === 0 ? "今天是纪念日哟" : nextDays}，
                             {nextBirthday === 0
                                 ? "今天是小猪生日哟"
-                                : nextBirthday}
+                                : nextBirthday}，
+                            ssl 证书:{certExpiry}
                         </span>
                     </Tooltip>
                 </div>
@@ -162,28 +177,6 @@ const HeaderAdmin: React.FC<PropsType> = (props) => {
                     checked={theme === "light"}
                     onClick={switchTheme}
                 />
-                <span
-                    className={styles.routerItem}
-                    onClick={() =>
-                        window.open(
-                            "https://tongji.baidu.com/web/10000199972/overview/index?siteId=15040289",
-                            "_blank"
-                        )
-                    }
-                >
-                    百度统计
-                </span>
-                <span
-                    className={styles.routerItem}
-                    onClick={() =>
-                        window.open(
-                            "https://github.com/xiaxiazheng/reactblog",
-                            "_blank"
-                        )
-                    }
-                >
-                    github
-                </span>
                 <Tooltip
                     placement="bottomLeft"
                     title="退出登录，并删除本地登录凭证"
