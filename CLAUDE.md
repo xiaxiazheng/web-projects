@@ -33,12 +33,22 @@ pnpm --filter @xiaxiazheng/blog-libs build   # Build the library
 pnpm --filter @xiaxiazheng/blog-libs watch    # Watch mode for development
 ```
 
+**Local development workflow**:
+```bash
+yalc publish                         # Register library locally (first time)
+yalc add @xiaxiazheng/blog-libs      # Link to target project (next-app/reactblog)
+yarn watch                           # Watch mode - rebuild on changes
+yarn patch                           # Push changes to target project
+```
+
 ### apps/next-app (Next.js 16 with Turbopack)
 ```bash
 pnpm --filter next-app dev     # Development server at localhost:3000/m
 pnpm --filter next-app build   # Production build
 pnpm --filter next-app lint    # ESLint
 ```
+
+**Note**: App runs at `/m` (basePath), not root.
 
 ### apps/reactblog (Rspack)
 ```bash
@@ -72,8 +82,9 @@ Next.js 16 app at path `/m` (basePath). Uses:
 ### reactblog
 Rspack-based React app. Uses:
 - React Router v5
-- Redux/Rematch for state
+- Redux/Rematch for state (Todo module only)
 - Ant Design v6
+- Context layering: `IsLoginProvider → ThemeProvider → UserProvider → SettingsProvider → Router`
 
 ### blog-deploy
 Static site deployment with HTML/JS/CSS assets.
