@@ -203,7 +203,7 @@ const CMD: React.FC<ICMD> = (props) => {
             <div>
                 <div>预设脚本：</div>
                 <div className={`${styles.script} ScrollBar`}>
-                    {list?.map((item) => {
+                    {[...list]?.reverse()?.map((item) => {
                         return (
                             <div
                                 className={styles.scriptItem}

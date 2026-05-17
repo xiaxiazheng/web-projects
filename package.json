@@ -8,6 +8,6 @@
     "build:blog": "pnpm --filter blog-libs build",
     "build:all": "pnpm -r build",
     "push:next": "pnpm --filter next-app docker:push",
-    "push:react": "pnpm --filter reactblog deploy"
+    "push:react": "pnpm --filter reactblog deployWeb"
   }
 }
