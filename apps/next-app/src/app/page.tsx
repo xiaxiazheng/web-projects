@@ -1,6 +1,6 @@
 'use client';
 import Header from "../components/common/header";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 import { message } from "antd";
 import { useRouter } from "next/navigation";
@@ -12,6 +12,7 @@ import dayjs from "dayjs";
 
 export default function Home() {
     const router = useRouter();
+    const [refreshFlag, setRefreshFlag] = useState(0);
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -47,6 +48,7 @@ export default function Home() {
             const res = await addTodoItem(newTodo);
             if (res && res.resultsCode === "success") {
                 message.success("语音 todo 创建成功");
+                setRefreshFlag(f => f + 1);
             } else {
                 message.error(res?.message || "创建失败");
             }
@@ -59,7 +61,7 @@ export default function Home() {
         <div>
             <Header title="XIAXIAZheng" />
             <main className={styles.home}>
-                <TodoTabs refreshFlag={0} />
+                <TodoTabs refreshFlag={refreshFlag} />
             </main>
             <TouchEventComp />
             <VoiceRecorder onRecognized={handleVoiceRecognized} />

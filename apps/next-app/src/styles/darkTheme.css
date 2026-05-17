@@ -9,6 +9,7 @@
   --bg_color_mask: rgba(230, 247, 255, 0.18039215686);
   --border_color: white;
   --keyword_highlight: yellow;
+  color: var(--color);
 
   .ant-modal-header,
   .ant-modal-content,
@@ -21,7 +22,8 @@
     background-color: #001529;
   }
 
-  .ant-select-open .ant-select-content-value {
+  .ant-select-open .ant-select-content-value,
+  .ant-spin {
     color: unset;
   }
 

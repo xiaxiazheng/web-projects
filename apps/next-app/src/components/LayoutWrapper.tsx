@@ -2,7 +2,7 @@
 // import { AppProps } from "next/app";
 // import "../styles/global.scss";
 import { FC, ReactNode, useState } from "react";
-import { Spin } from "antd";
+import { Spin, ConfigProvider, theme } from "antd";
 import RouterDrawer from "../components/common/router-drawer";
 import Affix from "../components/common/affix";
 import { useRouter, usePathname } from "next/navigation";
@@ -25,36 +25,45 @@ const LayoutWrapper: FC<{ children: ReactNode }> = ({ children }) => {
     const isShowHome = !isMusic && usePathname() !== "/" && usePathname() !== '/todo-note';
     return (
         <Provider>
-            <Spin spinning={loading} style={{ overflow: "hidden" }}>
-                {/* <Component {...pageProps} setRouterLoading={setLoading} refreshFlag={flag} /> */}
-                {children}
-                {isShowHome && <Affix type="home" bottomIndex={1} />}
-                <Affix
-                    type="category"
-                    bottomIndex={isShowHome ? 2 : 1}
-                    onClick={() => {
-                        setShowDrawer(true);
-                    }}
-                />
-                {!isMusic && <AddTodoHoc
-                    onClose={() => refresh()}
-                    renderChildren={({ onClick }) => {
-                        return (
-                            <Affix
-                                type="add"
-                                bottomIndex={isShowHome ? 3 : 2}
-                                onClick={() => onClick()}
-                            />
-                        )
-                    }} />
-                }
-                <RouterDrawer
-                    setRouterLoading={setLoading}
-                    refresh={refresh}
-                    showDrawer={showDrawer}
-                    setShowDrawer={setShowDrawer}
-                />
-            </Spin>
+            <ConfigProvider
+                theme={{
+                    algorithm: theme.darkAlgorithm,
+                    token: {
+                        colorPrimary: '#1890ff',
+                    },
+                }}
+            >
+                <Spin spinning={loading} style={{ overflow: "hidden" }}>
+                    {/* <Component {...pageProps} setRouterLoading={setLoading} refreshFlag={flag} /> */}
+                    {children}
+                    {isShowHome && <Affix type="home" bottomIndex={1} />}
+                    <Affix
+                        type="category"
+                        bottomIndex={isShowHome ? 2 : 1}
+                        onClick={() => {
+                            setShowDrawer(true);
+                        }}
+                    />
+                    {!isMusic && <AddTodoHoc
+                        onClose={() => refresh()}
+                        renderChildren={({ onClick }) => {
+                            return (
+                                <Affix
+                                    type="add"
+                                    bottomIndex={isShowHome ? 3 : 2}
+                                    onClick={() => onClick()}
+                                />
+                            )
+                        }} />
+                    }
+                    <RouterDrawer
+                        setRouterLoading={setLoading}
+                        refresh={refresh}
+                        showDrawer={showDrawer}
+                        setShowDrawer={setShowDrawer}
+                    />
+                </Spin>
+            </ConfigProvider>
         </Provider>
     )
 }

@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import styles from "./index.module.scss";
+import { message } from "antd";
 
 const serverUrl =
     process.env.NEXT_PUBLIC_IS_LOCAL === "YES"
@@ -14,14 +15,13 @@ enum RecordingState {
     idle,
     recording,
     recognizing,
+    failed,
+    confirmed,
 }
 
 const VoiceRecorder: React.FC<Props> = ({ onRecognized }) => {
     const [state, setState] = useState<RecordingState>(RecordingState.idle);
-    const [isLongPressing, setIsLongPressing] = useState(false);
-    const [isCancelled, setIsCancelled] = useState(false);
     const [recordingDuration, setRecordingDuration] = useState(0);
-    const [errorMessage, setErrorMessage] = useState("");
 
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
     const audioChunksRef = useRef<Blob[]>([]);
@@ -32,6 +32,9 @@ const VoiceRecorder: React.FC<Props> = ({ onRecognized }) => {
     const analyserRef = useRef<AnalyserNode | null>(null);
     const audioLevelsRef = useRef<number[]>(Array(20).fill(0.05));
     const [audioLevels, setAudioLevels] = useState<number[]>(Array(20).fill(0.05));
+    const audioBlobRef = useRef<Blob | null>(null);
+    const isCancelledRef = useRef(false);
+    const recognizedTextRef = useRef("");
 
     const MAX_DURATION = 60;
 
@@ -43,11 +46,20 @@ const VoiceRecorder: React.FC<Props> = ({ onRecognized }) => {
         };
     }, []);
 
+    const resetState = () => {
+        setState(RecordingState.idle);
+        setRecordingDuration(0);
+        audioLevelsRef.current = Array(20).fill(0.05);
+        setAudioLevels(Array(20).fill(0.05));
+        audioChunksRef.current = [];
+        audioBlobRef.current = null;
+        recognizedTextRef.current = "";
+    };
+
     const startRecording = async () => {
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
 
-            // 设置音频分析
             audioContextRef.current = new AudioContext();
             analyserRef.current = audioContextRef.current.createAnalyser();
             const source = audioContextRef.current.createMediaStreamSource(stream);
@@ -73,18 +85,21 @@ const VoiceRecorder: React.FC<Props> = ({ onRecognized }) => {
                     audioContextRef.current = null;
                 }
 
-                if (!isCancelled) {
-                    setState(RecordingState.recognizing);
-                    await sendAudio();
+                if (isCancelledRef.current) {
+                    isCancelledRef.current = false;
+                    resetState();
+                    return;
                 }
+
+                audioBlobRef.current = new Blob(audioChunksRef.current, { type: "audio/webm" });
+                setState(RecordingState.recognizing);
+                await sendAudio();
             };
 
             mediaRecorderRef.current.start(100);
             startTimeRef.current = new Date();
             setState(RecordingState.recording);
-            setIsLongPressing(true);
 
-            // 开始计时
             timerRef.current = setInterval(() => {
                 if (startTimeRef.current) {
                     const duration = (Date.now() - startTimeRef.current.getTime()) / 1000;
@@ -96,10 +111,9 @@ const VoiceRecorder: React.FC<Props> = ({ onRecognized }) => {
                 }
             }, 100);
 
-            // 开始更新音频波形
             updateAudioLevels();
         } catch (error: any) {
-            setErrorMessage("无法访问麦克风：" + error.message);
+            message.error("无法访问麦克风：" + error.message);
         }
     };
 
@@ -132,20 +146,28 @@ const VoiceRecorder: React.FC<Props> = ({ onRecognized }) => {
         if (mediaRecorderRef.current && mediaRecorderRef.current.state !== "inactive") {
             mediaRecorderRef.current.stop();
         }
-
-        setIsLongPressing(false);
     };
 
     const cancelRecording = () => {
-        setIsCancelled(true);
+        if (state === RecordingState.failed || state === RecordingState.confirmed) {
+            resetState();
+            return;
+        }
+        isCancelledRef.current = true;
         stopRecording();
-        setTimeout(() => {
-            setIsCancelled(false);
-            setState(RecordingState.idle);
-            setRecordingDuration(0);
-            audioLevelsRef.current = Array(20).fill(0.05);
-            setAudioLevels(Array(20).fill(0.05));
-        }, 100);
+    };
+
+    const handleConfirmAddTodo = () => {
+        if (recognizedTextRef.current) {
+            onRecognized(recognizedTextRef.current);
+        }
+        resetState();
+    };
+
+    const retrySendAudio = async () => {
+        if (!audioBlobRef.current) return;
+        setState(RecordingState.recognizing);
+        await sendAudio();
     };
 
     const sendAudio = async () => {
@@ -172,17 +194,16 @@ const VoiceRecorder: React.FC<Props> = ({ onRecognized }) => {
                 const data = await res.json();
 
                 if (data.resultsCode === "success" && data.data?.text) {
-                    onRecognized(data.data.text);
+                    message.success("识别成功");
+                    recognizedTextRef.current = data.data.text;
+                    setState(RecordingState.confirmed);
                 } else {
-                    setErrorMessage(data.message || "识别失败");
+                    message.error(data.message || "识别失败");
+                    setState(RecordingState.failed);
                 }
             } catch (error: any) {
-                setErrorMessage("识别请求失败：" + error.message);
-            } finally {
-                setState(RecordingState.idle);
-                setRecordingDuration(0);
-                audioLevelsRef.current = Array(20).fill(0.05);
-                setAudioLevels(Array(20).fill(0.05));
+                message.error("识别请求失败：" + error.message);
+                setState(RecordingState.failed);
             }
         };
 
@@ -194,36 +215,19 @@ const VoiceRecorder: React.FC<Props> = ({ onRecognized }) => {
         return `00:${String(remaining).padStart(2, "0")}`;
     };
 
-    const handleTouchStart = () => {
-        startRecording();
-    };
-
-    const handleTouchEnd = () => {
-        if (state === RecordingState.recording) {
-            if (isCancelled) {
-                cancelRecording();
-            } else {
-                stopRecording();
-            }
+    const handleMicClick = () => {
+        if (state === RecordingState.idle) {
+            startRecording();
         }
-    };
-
-    const handleTouchCancel = () => {
-        cancelRecording();
     };
 
     return (
         <div className={styles.container}>
             {/* 录音状态覆盖层 */}
-            {state === RecordingState.recording && (
+            {(state === RecordingState.recording || state === RecordingState.recognizing || state === RecordingState.failed || state === RecordingState.confirmed) && (
                 <div className={styles.overlay}>
                     <div className={styles.recordingBox}>
-                        {isCancelled ? (
-                            <div className={styles.cancelBox}>
-                                <div className={styles.cancelIcon}>✕</div>
-                                <div className={styles.cancelText}>松开取消</div>
-                            </div>
-                        ) : (
+                        {state === RecordingState.recording && (
                             <>
                                 <div className={styles.waveform}>
                                     {audioLevels.map((level, index) => (
@@ -236,39 +240,73 @@ const VoiceRecorder: React.FC<Props> = ({ onRecognized }) => {
                                 </div>
                                 <div className={styles.micIcon}>🎤</div>
                                 <div className={styles.duration}>{formatDuration(recordingDuration)}</div>
-                                <div className={styles.hint}>松开发送，上滑取消</div>
                             </>
                         )}
-                    </div>
-                </div>
-            )}
 
-            {state === RecordingState.recognizing && (
-                <div className={styles.overlay}>
-                    <div className={styles.recognizingBox}>
-                        <div className={styles.spinner} />
-                        <div className={styles.recognizingText}>识别中...</div>
+                        {state === RecordingState.recognizing && (
+                            <>
+                                <div className={styles.spinner} />
+                                <div className={styles.recognizingText}>识别中...</div>
+                            </>
+                        )}
+
+                        {state === RecordingState.failed && (
+                            <>
+                                <div className={styles.errorIcon}>!</div>
+                                <div className={styles.errorText}>识别失败</div>
+                            </>
+                        )}
+
+                        {state === RecordingState.confirmed && (
+                            <>
+                                <div className={styles.successIcon}>✓</div>
+                                <div className={styles.recognizedText}>{recognizedTextRef.current}</div>
+                            </>
+                        )}
+
+                        <div className={styles.buttonGroup}>
+                            <button
+                                className={styles.cancelBtn}
+                                onClick={cancelRecording}
+                            >
+                                取消
+                            </button>
+                            {state === RecordingState.recording && (
+                                <button
+                                    className={styles.endBtn}
+                                    onClick={stopRecording}
+                                >
+                                    结束
+                                </button>
+                            )}
+                            {state === RecordingState.failed && (
+                                <button
+                                    className={styles.retryBtn}
+                                    onClick={retrySendAudio}
+                                >
+                                    重试
+                                </button>
+                            )}
+                            {state === RecordingState.confirmed && (
+                                <button
+                                    className={styles.addBtn}
+                                    onClick={handleConfirmAddTodo}
+                                >
+                                    新增 todo
+                                </button>
+                            )}
+                        </div>
                     </div>
                 </div>
             )}
 
             {/* 麦克风按钮 */}
-            <div
-                className={`${styles.micButton} ${isLongPressing ? styles.active : ""}`}
-                onTouchStart={handleTouchStart}
-                onTouchEnd={handleTouchEnd}
-                onTouchCancel={handleTouchCancel}
-                onMouseDown={handleTouchStart}
-                onMouseUp={handleTouchEnd}
-                onMouseLeave={handleTouchCancel}
-            >
-                <div className={styles.micIcon}>🎤</div>
-            </div>
-
-            {/* 错误提示 */}
-            {errorMessage && (
-                <div className={styles.error} onClick={() => setErrorMessage("")}>
-                    {errorMessage}
+            {state === RecordingState.idle && (
+                <div
+                    className={styles.micButton}
+                    onClick={handleMicClick}
+                >
+                    <div className={styles.micIcon}>🎤</div>
                 </div>
             )}
         </div>
