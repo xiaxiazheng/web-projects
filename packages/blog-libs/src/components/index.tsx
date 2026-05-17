@@ -21,3 +21,4 @@ export * from './upload-component/utils';
 export * from './todo-form';
 
 export * from './todo-utils';
+export { default as SearchHistory, getHisotryList, setHistoryWord, clearHistoryWord } from './search-history';

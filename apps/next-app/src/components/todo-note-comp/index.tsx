@@ -1,5 +1,5 @@
 import styles from "./index.module.scss";
-import { getTodoList, getTodoCategory, TodoItemType, handleCopy, getTodoTimeDetail, Loading } from "@xiaxiazheng/blog-libs";
+import { getTodoList, getTodoCategory, TodoItemType, handleCopy, getTodoTimeDetail, Loading, SearchHistory, setHistoryWord, getHisotryList } from "@xiaxiazheng/blog-libs";
 import { useEffect, useRef, useState } from "react";
 import { Input, Button, Pagination, Radio, Space, message } from "antd";
 import { ApartmentOutlined, SyncOutlined } from "@ant-design/icons";
@@ -23,6 +23,7 @@ const TodoNoteComp = () => {
     const [total, setTotal] = useState<number>(0);
     const pageSize = 10;
     const [keyword, setKeyword] = useState<string>();
+    const [isShowHistory, setIsShowHistory] = useState<boolean>(false);
 
     const [list, setList] = useState<TodoItemType[]>([]);
     const [sortBy, setSortBy] = useState<"mTime" | "time">("time");
@@ -103,7 +104,7 @@ const TodoNoteComp = () => {
                     <Button style={{ width: 50 }} icon={<SyncOutlined />} onClick={() => getData({ isNeedScroll: false })} type="default" />
                 </Space>
             </h2>
-            <div>
+            <div style={{ position: "relative" }}>
                 <Search
                     className={styles.search}
                     placeholder="输入搜索"
@@ -112,9 +113,24 @@ const TodoNoteComp = () => {
                     enterButton
                     allowClear
                     onSearch={() => {
+                        if (keyword) setHistoryWord(keyword);
                         getData();
+                        setIsShowHistory(false);
+                    }}
+                    onFocus={() => setIsShowHistory(true)}
+                    onBlur={() => {
+                        setTimeout(() => setIsShowHistory(false), 100);
                     }}
                 />
+                {isShowHistory && (
+                    <SearchHistory
+                        onSearch={(key) => {
+                            setKeyword(key);
+                            getData();
+                            setIsShowHistory(false);
+                        }}
+                    />
+                )}
             </div>
             <div className={styles.content} ref={ref}>
                 <div className={styles.list}>
