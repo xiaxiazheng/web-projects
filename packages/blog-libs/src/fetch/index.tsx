@@ -23,7 +23,7 @@ export * from "./treecont";
 
 const serverUrl =
     process.env.REACT_APP_IS_LocalHost === "yes" ||
-    process.env.NEXT_PUBLIC_IS_LOCAL === "YES" ? "http://localhost:300/api" : "http://11.230.47.60:444/api";
+    process.env.NEXT_PUBLIC_IS_LOCAL === "YES" ? "http://localhost:300/api" : "https://www.xiaxiazheng.cn/api";
 export const staticUrl =
     process.env.REACT_APP_IS_LOCALSTATIC === "yes" ||
     process.env.NEXT_PUBLIC_IS_LOCAL_STATIC === "YES"

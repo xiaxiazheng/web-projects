@@ -13,7 +13,6 @@
         "eject": "echo \"Error: eject command not available with rspack\" && exit 1",
         "deploy": "sh deploy.sh",
         "deployLocal": "sh deployLocal.sh",
-        "prepare": "husky install",
         "checkByted": "node ./checkByted.js",
         "deployPush": "sh deployPush.sh",
         "deployPull": "node deployPull.js"

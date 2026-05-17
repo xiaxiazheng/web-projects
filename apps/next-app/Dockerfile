@@ -1,18 +1,17 @@
 # 使用 node 镜像
 FROM node:20-alpine
 
-# 准备工作目录
 WORKDIR /app
 
-# 复制文件
-COPY package*.json yarn.lock next.config.ts /app/
-COPY .next/ /app/.next
-COPY node_modules/ /app/node_modules
+# 复制 next-app package.json 并安装依赖（移除 workspace:* 依赖，Next.js 构建时已打包）
+COPY package.json ./
+RUN sed -i 's/"@xiaxiazheng\/blog-libs": "workspace:\*",//g' package.json && \
+    npm install --omit=dev --ignore-scripts
 
-# 安装依赖
-# RUN yarn config set strict-ssl false && yarn --prod
+# 复制 .next 和 next.config.ts（包含 basePath: "/m" 配置）
+COPY .next/ ./.next/
+COPY next.config.ts ./
 
-EXPOSE  3000
+EXPOSE 3000
 
-# 启动服务
-CMD ["yarn", "start"]
+CMD ["npm", "run", "start"]

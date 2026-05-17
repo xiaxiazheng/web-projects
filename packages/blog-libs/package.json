@@ -17,9 +17,7 @@
     "build": "rslib build",
     "watch": "rslib build --watch",
     "publish": "npm login|npm publish",
-    "init": "yalc publish",
-    "patch": "node ./patch.js",
-    "push": "yalc push --watch"
+    "patch": "node ./patch.js"
   },
   "dependencies": {
     "hammerjs": "^2.0.8",
