@@ -1,0 +1,50 @@
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+pre,
+fieldset,
+button,
+input,
+textarea,
+hr,
+th,
+td {
+    padding: 0;
+    color: var(--color);
+    background-color: var(--bg_color);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--color) !important;
+}
+
+html {
+    height: 100%;
+    body {
+        height: 100%;
+        margin: 0;
+        #root {
+            height: 100%;
+            .App {
+                height: 100%;
+            }
+        }
+    }
+}

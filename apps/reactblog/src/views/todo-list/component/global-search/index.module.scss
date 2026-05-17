@@ -1,0 +1,98 @@
+.filterWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    > div {
+        margin-top: 10px;
+        margin-right: 10px;
+    }
+
+    :global {
+        .ant-radio-button-wrapper {
+            color: var(--color);
+            background-color: #001529;
+        }
+        .ant-radio-button-wrapper-checked {
+            color: white !important;
+        }
+    }
+}
+
+.search {
+    // display: inline-block;
+    // margin: 0 20px 10px;
+    // width: calc(100% - 40px);
+    width: 100%;
+    background: var(--bg_color);
+    color: var(--color);
+}
+
+.select {
+    :global {
+        .ant-select-clear {
+            color: white;
+            background: transparent;
+            &:hover {
+                color: white;
+                background: transparent;
+            }
+        }
+    }
+}
+
+.btn {
+    color: var(--color) !important;
+    & > span:hover {
+        color: var(--color_active) !important;
+    }
+}
+
+.color {
+    &.zero {
+        :global {
+            .ant-radio-button-checked {
+                background-color: #f5222d;
+                border-color: #f5222d;
+            }
+        }
+    }
+    &.one {
+        :global {
+            .ant-radio-button-checked {
+                background-color: #a756df;
+                border-color: #a756df;
+            }
+        }
+    }
+    &.two {
+        :global {
+            .ant-radio-button-checked {
+                background-color: #40a9ff;
+                border-color: #40a9ff;
+            }
+        }
+    }
+    &.three {
+        :global {
+            .ant-radio-button-checked {
+                background-color: #fa8c16;
+                border-color: #fa8c16;
+            }
+        }
+    }
+    &.four {
+        :global {
+            .ant-radio-button-checked {
+                background-color: #827e7e;
+                border-color: #827e7e;
+            }
+        }
+    }
+    &.minusOne {
+        :global {
+            .ant-radio-button-checked {
+                background-color: #00d4d8;
+                border-color: #00d4d8;
+            }
+        }
+    }
+}

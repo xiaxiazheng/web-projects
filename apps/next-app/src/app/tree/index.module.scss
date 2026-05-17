@@ -1,0 +1,81 @@
+.tree {
+    color: #a6adb4;
+    span {
+        vertical-align: middle;
+    }
+}
+.tree :global(.ant-form-item-label > label) {
+    color: #a6adb4;
+}
+
+.tree :global(.ant-radio-wrapper) {
+    color: #a6adb4;
+}
+
+.tree :global(.ant-input) {
+    color: #a6adb4;
+    background-color: #001529;
+}
+
+.tree :global(textarea.ant-input) {
+    color: #a6adb4;
+    background-color: #001529;
+}
+
+.tree :global(.ant-collapse) {
+    color: #a6adb4;
+    background-color: #001529;
+}
+.tree :global(.ant-collapse-content) {
+    color: #a6adb4;
+    background-color: #001529;
+}
+.tree :global(.ant-collapse-content-box) {
+    padding: 7px 0 12px;
+}
+.tree :global(.ant-collapse > .ant-collapse-item > .ant-collapse-header) {
+    color: #a6adb4;
+    background-color: #001529;
+}
+
+.h2 {
+    display: flex;
+    justify-content: space-between;
+}
+
+.content {
+    .list {
+        width: 100%;
+        height: calc(100vh - 16px - 140px);
+        overflow-y: auto;
+        box-sizing: border-box;
+        .listItem {
+            width: 100%;
+            .title {
+                font-size: 18px;
+                padding: 5px 0;
+                border-bottom: 1px solid #ccc;
+            }
+            .cont {
+                margin-bottom: 10px;
+                padding: 10px 0;
+            }
+        }
+    }
+}
+
+.showTree {
+    position: fixed;
+    bottom: 20px;
+    right: 70px;
+    opacity: 0.5;
+}
+
+.imgFileList {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 80px);
+    justify-content: flex-start;
+    grid-row-gap: 8px;
+    grid-column-gap: 7px;
+    margin: 7px 0 5px;
+}

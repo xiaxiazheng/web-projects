@@ -1,0 +1,169 @@
+.wrapper {
+    display: flex;
+    .left {
+        flex: 1;
+        margin-right: 10px;
+        overflow-x: hidden;
+    }
+    .right {
+        width: calc(100% / 3);
+    }
+}
+
+.today {
+    display: inline-block;
+    margin-left: 10px;
+    padding: 5px 0;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.65);
+    &.active {
+        color: #40a9ff;
+    }
+    &.active1 {
+        color: #f5222d;
+    }
+    &.active2 {
+        color: #20d420;
+    }
+}
+
+.week {
+    padding: 0 5px;
+    color: rgba(255, 255, 255, 0.65);
+    &.active {
+        color: #40a9ff;
+    }
+    &.active1 {
+        color: #f5222d;
+    }
+    &.active2 {
+        color: #20d420;
+    }
+}
+
+.space {
+    max-width: 100%;
+    :global {
+        .ant-space-item {
+            overflow: hidden;
+        }
+        .ant-space-item:first-child {
+            flex: 1;
+            overflow: hidden;
+        }
+    }
+    .nowTodo {
+        width: 100%;
+        overflow: hidden;
+    }
+}
+
+.form {
+    :global {
+        .ant-form-item {
+            margin-bottom: 10px;
+        }
+
+        .ant-form-item-label > label {
+            color: rgba(255, 255, 255, 0.65);
+        }
+
+        .ant-input {
+            padding-right: 20px;
+        }
+
+        .ant-input-affix-wrapper,
+        .ant-input,
+        .anticon.ant-input-clear-icon,
+        .ant-btn,
+        .ant-radio-button-wrapper,
+        .ant-select-selector.ant-select-selector,
+        .ant-picker,
+        .ant-picker-input > input,
+        .ant-picker-suffix,
+        .ant-picker-clear {
+            color: rgba(255, 255, 255, 0.65);
+            background-color: #001529;
+        }
+        .ant-switch {
+            background-color: #4b4646;
+        }
+        .ant-btn:hover {
+            color: #1890ff;
+        }
+        .ant-switch-checked,
+        .ant-btn-primary {
+            background-color: #1890ff;
+            color: white;
+        }
+        .ant-btn-primary.ant-btn-dangerous {
+            background-color: #ff4d4f;
+        }
+        .ant-radio-button-wrapper-checked {
+            color: white !important;
+        }
+    }
+}
+
+.showMore {
+    // width: 100%;
+    text-align: center;
+    &:hover {
+        color: #40a9ff;
+    }
+}
+
+.color {
+    &.zero {
+        :global {
+            .ant-radio-button-checked {
+                background-color: #f5222d;
+                border-color: #f5222d;
+            }
+        }
+    }
+    &.one {
+        :global {
+            .ant-radio-button-checked {
+                background-color: #a756df;
+                border-color: #a756df;
+            }
+        }
+    }
+    &.two {
+        :global {
+            .ant-radio-button-checked {
+                background-color: #40a9ff;
+                border-color: #40a9ff;
+            }
+        }
+    }
+    &.three {
+        :global {
+            .ant-radio-button-checked {
+                background-color: #fa8c16;
+                border-color: #fa8c16;
+            }
+        }
+    }
+    &.four {
+        :global {
+            .ant-radio-button-checked {
+                background-color: #827e7e;
+                border-color: #827e7e;
+            }
+        }
+    }
+    &.minusOne {
+        :global {
+            .ant-radio-button-checked {
+                background-color: #00d4d8;
+                border-color: #00d4d8;
+            }
+        }
+    }
+}
+
+.selectOptions {
+    z-index: 10;
+}

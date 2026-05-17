@@ -1,0 +1,22 @@
+.pool span {
+    vertical-align: middle;
+}
+
+.h2 {
+    display: flex;
+    justify-content: space-between;
+}
+
+.list > div {
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+.name {
+    color: #83bcf1;
+    font-size: 16px;
+    font-weight: 600;
+}
+

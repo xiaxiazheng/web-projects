@@ -1,0 +1,41 @@
+.pagination {
+    color: white;
+    justify-content: flex-end;
+
+    :global(.ant-pagination-jump-next .ant-pagination-item-container .ant-pagination-item-ellipsis) {
+        color: #a6adb4;
+    }
+    :global(.ant-pagination-prev) {
+        color: #a6adb4;
+    }
+    :global(.ant-pagination-next) {
+        color: #a6adb4;
+    }
+    :global(.ant-pagination-jump-prev) {
+        color: #a6adb4;
+    }
+    :global(.ant-pagination-jump-next) {
+        color: #a6adb4;
+    }
+    :global(.ant-pagination-prev button) {
+        color: #a6adb4;
+    }
+    :global(.ant-pagination-next button) {
+        color: #a6adb4;
+    }
+    :global(.ant-pagination-item a) {
+        color: #a6adb4;
+    }
+    :global(.ant-pagination-jump-prev .ant-pagination-item-container .ant-pagination-item-ellipsis) {
+        color: #a6adb4;
+    }
+    :global(.ant-pagination-jump-next .ant-pagination-item-container .ant-pagination-item-ellipsis) {
+        color: #a6adb4;
+    }
+    :global(.ant-pagination-disabled .ant-pagination-item-link) {
+        color: #a6adb4;
+    }
+    :global(.ant-pagination-item-active) {
+        background-color: #001529;
+    }
+}

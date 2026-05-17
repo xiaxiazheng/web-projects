@@ -1,0 +1,11 @@
+.nameTextArea {
+  position: relative;
+  .deleteIcon {
+      position: absolute;
+      bottom: -30px;
+      right: 0;
+      font-size: 16px;
+      cursor: pointer;
+      z-index: 2;
+  }
+}

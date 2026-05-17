@@ -1,0 +1,106 @@
+.edit_todo {
+    overflow-x: hidden;
+
+    :global(.ant-radio-button-wrapper-checked) {
+        color: white !important;
+    }
+}
+
+.edit_todo :global(.ant-form-item) {
+    margin-bottom: 10px;
+}
+
+.edit_todo :global(.ant-form-item-label > label) {
+    color: #a6adb4;
+}
+
+.edit_todo :global(.ant-radio-wrapper) {
+    color: #a6adb4;
+}
+
+.edit_todo :global(textarea.ant-input) {
+    color: #a6adb4;
+    background-color: #001529;
+}
+
+.edit_todo :global(.anticon.ant-input-clear-icon) {
+    color: #a6adb4 !important;
+}
+
+.edit_todo :global(.ant-input) {
+    &::placeholder {
+        color: #a6adb4;
+    }
+}
+
+.edit_todo :global(.ant-btn-default) {
+    color: #a6adb4;
+    background-color: #001529;
+}
+
+.searchTodo {
+    :global(.ant-select-selector) {
+        width: unset !important;
+    }
+}
+
+.showAll {
+    display: inline-flex;
+    justify-content: center;
+
+    span {
+        vertical-align: middle;
+    }
+
+    :global(.ant-btn-text),
+    :global(.ant-btn-text:not(:disabled):hover) {
+        color: #a6adb4;
+
+    }
+}
+
+.color {
+    :global(.ant-radio-button-checked) {
+        background-color: #f5222d;
+        border-color: #f5222d;
+    }
+}
+
+.color.one {
+    :global(.ant-radio-button-checked) {
+        background-color: #a756df;
+        border-color: #a756df;
+    }
+}
+
+
+.color.two {
+    :global(.ant-radio-button-checked) {
+        background-color: #40a9ff;
+        border-color: #40a9ff;
+    }
+
+}
+
+.color.three {
+    :global(.ant-radio-button-checked) {
+        background-color: #fa8c16;
+        border-color: #fa8c16;
+    }
+}
+
+
+.color.four {
+    :global(.ant-radio-button-checked) {
+        background-color: #827e7e;
+        border-color: #827e7e;
+    }
+}
+
+
+.color.minusOne {
+    :global(.ant-radio-button-checked) {
+        background-color: #00d4d8;
+        border-color: #00d4d8;
+    }
+}

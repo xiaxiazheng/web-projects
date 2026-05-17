@@ -1,0 +1,20 @@
+.pool span {
+    vertical-align: middle;
+}
+
+.h2 {
+    display: flex;
+    justify-content: space-between;
+}
+
+.time {
+    padding: 3px 0;
+    font-size: 16px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid white;
+}
+
+.content {
+    width: 100%;
+    height: calc(100vh - 16px - 85px);
+}

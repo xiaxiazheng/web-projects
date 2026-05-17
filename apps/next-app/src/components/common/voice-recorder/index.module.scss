@@ -1,0 +1,146 @@
+.container {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1001;
+}
+
+.recordingBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 40px;
+}
+
+.waveform {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    height: 80px;
+}
+
+.bar {
+    width: 4px;
+    background: #1890ff;
+    border-radius: 2px;
+    transition: height 0.05s ease;
+}
+
+.micIcon {
+    font-size: 40px;
+}
+
+.duration {
+    font-size: 24px;
+    font-weight: 500;
+    font-family: monospace;
+    color: white;
+}
+
+.hint {
+    font-size: 14px;
+    color: #999;
+}
+
+.cancelBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.cancelIcon {
+    font-size: 50px;
+    color: #ff4d4f;
+}
+
+.cancelText {
+    font-size: 16px;
+    font-weight: 500;
+    color: #ff4d4f;
+}
+
+.recognizingBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.recognizingText {
+    font-size: 18px;
+    color: white;
+}
+
+.micButton {
+    position: fixed;
+    bottom: 30px;
+    right: 70px;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: #1890ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(24, 144, 255, 0.4);
+    transition: all 0.2s ease;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+
+    .micIcon {
+        font-size: 30px;
+        color: white;
+    }
+
+    &:active,
+    &.active {
+        background: rgba(24, 144, 255, 0.3);
+        transform: scale(1.1);
+    }
+}
+
+.error {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 16px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    z-index: 1002;
+}

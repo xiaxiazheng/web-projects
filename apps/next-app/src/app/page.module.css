@@ -1,0 +1,35 @@
+.home :global(.ant-input) {
+    color: var(--color);
+    background-color: #001529;
+}
+.home :global(.ant-input::placeholder) {
+    color: var(--color);
+    background-color: #001529;
+}
+.home :global(.ant-input-affix-wrapper) {
+    color: var(--color);
+    background-color: #001529;
+}
+.home :global(.ant-tabs) {
+    color: var(--color);
+}
+.home :global(.ant-tabs-tab-btn) {
+    color: var(--color);
+}
+.home :global(.ant-tabs.ant-tabs-tab) {
+    color: var(--color);
+}
+.home :global(.ant-tabs-nav) {
+    margin-bottom: 0;
+}
+.home :global(.ant-spin-container) {
+    color: var(--color);
+}
+
+.home {
+    color: var(--color);
+    .content {
+        height: calc(100vh - 78px);
+        overflow-y: hidden;
+    }
+}

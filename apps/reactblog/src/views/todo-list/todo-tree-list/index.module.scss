@@ -1,0 +1,52 @@
+.list {
+    position: relative;
+    flex: 1;
+    min-height: 100%;
+    padding: 0 20px;
+
+    &:nth-child(2) {
+        flex: 1.2;
+        border-left: 1px solid var(--border_color);
+        border-right: 1px solid var(--border_color);
+    }
+
+    .header {
+        position: sticky;
+        top: 0;
+        left: 0;
+        background-color: var(--bg_color);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0 5px;
+        font-size: 18px;
+        font-weight: 600;
+
+        > span {
+            &.active {
+                color: var(--color_active);
+            }
+        }
+    }
+
+    .oneDay {
+        margin-bottom: 8px;
+
+        .time {
+            margin-bottom: 8px;
+            border-bottom: 1px solid var(--border_color);
+
+            &.today {
+                color: var(--color_active);
+            }
+
+            &.previously {
+                color: red;
+            }
+
+            &.future {
+                color: grey;
+            }
+        }
+    }
+}

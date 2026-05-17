@@ -1,0 +1,44 @@
+{
+  "name": "next-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "dev:local": "NEXT_PUBLIC_IS_LOCAL=YES next dev",
+    "build": "next build",
+    "start": "next start -H 0.0.0.0",
+    "lint": "eslint",
+    "docker:push": "sh deployPush.sh",
+    "docker:continuePush": "sh deployPushContinue.sh",
+    "docker:pull": "sh deployPull.sh",
+    "docker:build": "docker build --platform linux/amd64 -t xiaxiazheng/nextapp:latest .",
+    "docker:run": "docker run --rm -it -p 3000:3000/tcp xiaxiazheng/nextapp:latest",
+    "docker:save": "docker save -o xiaxiazheng-next-app.tar xiaxiazheng/nextapp",
+    "docker:load": "docker load --input xiaxiazheng-next-app.tar"
+  },
+  "dependencies": {
+    "@xiaxiazheng/blog-libs": "workspace:*",
+    "antd": "^6.1.3",
+    "dayjs": "^1.10.7",
+    "highlight.js": "^11.2.0",
+    "localforage": "^1.10.0",
+    "lodash": "^4.17.21",
+    "markdown-it": "^14.1.0",
+    "next": "16.1.1",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-photo-view": "^1.2.7"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.17.23",
+    "@types/markdown-it": "^14.1.2",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "babel-plugin-react-compiler": "1.0.0",
+    "eslint": "^9",
+    "eslint-config-next": "16.1.1",
+    "sass": "^1.97.1",
+    "typescript": "^5"
+  }
+}

@@ -1,0 +1,29 @@
+
+.home :global(.ant-input) {
+  color: #a6adb4;
+  background-color: #001529;
+}
+.home :global(.ant-input::placeholder) {
+  color: #a6adb4;
+  background-color: #001529;
+}
+.home :global(.ant-input-affix-wrapper) {
+  color: #a6adb4;
+  background-color: #001529;
+}
+.home :global(.ant-tabs) {
+  color: unset;
+}
+.home :global(.ant-tabs.ant-tabs-tab) {
+  color: #a6adb4;
+}
+.home :global(.ant-tabs-nav) {
+  margin-bottom: 0;
+}
+
+.home {
+  .content {
+      height: calc(100vh - 78px);
+      overflow-y: hidden;
+  }
+}

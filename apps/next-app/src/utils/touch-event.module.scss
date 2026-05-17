@@ -1,0 +1,12 @@
+.touchEventText {
+    position: fixed;
+    top: 50vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+    color: white;
+    background: #1bbb1b;
+    // #d9363e;
+    border-radius: 8px;
+    z-index: 1001;
+    padding: 5px 10px;
+}

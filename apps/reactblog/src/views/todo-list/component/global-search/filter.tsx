@@ -1,0 +1,385 @@
+import React, { useState, useEffect, useContext } from "react";
+import styles from "./index.module.scss";
+import { Button, Checkbox, DatePicker, Input, Radio, Space } from "antd";
+import { PlusOutlined, MinusOutlined } from "@ant-design/icons"
+import dayjs from "dayjs";
+import { useDispatch, useSelector } from "react-redux";
+import { Dispatch, RootState } from "../../rematch";
+import { SwitchCompent } from "@xiaxiazheng/blog-libs";
+import { useSettingsContext } from "@xiaxiazheng/blog-libs";
+import { UserContext } from "@/context/UserContext";
+import ModifyCategory from "./modifyCategory";
+import { CategoryType } from "../../types";
+
+interface IProps {
+    isSimple: boolean;
+}
+
+const Filter: React.FC<IProps> = (props) => {
+    // const { todoNameMap } = useSettingsContext();
+    const category = useSelector((state: RootState) => state.data.category);
+    const activeCategory = useSelector(
+        (state: RootState) => state.filter.activeCategory
+    );
+    const startEndTime: Array<dayjs.Dayjs> = useSelector(
+        (state: RootState) => state.filter.startEndTime
+    );
+    const isTarget = useSelector((state: RootState) => state.filter.isTarget);
+    const isNote = useSelector((state: RootState) => state.filter.isNote);
+    const isDirectory = useSelector((state: RootState) => state.filter.isDirectory);
+    const isEncode = useSelector((state: RootState) => state.filter.isEncode);
+
+    const { username } = useContext(UserContext);
+    const isMe = username === "zbb";
+
+    const dispatch = useDispatch<Dispatch>();
+
+    const {
+        setActiveCategory,
+        setStartEndTime,
+        setIsNote,
+        setIsTarget,
+        setisDirectory,
+        setIsEncode,
+    } = dispatch.filter;
+
+    const [timeType, setTimeType] = useState<"month" | "day" | "year">("day");
+
+    const handleStarEndTime = (val: any) => {
+        console.log("timeType", timeType);
+        if (timeType === "year") {
+            setStartEndTime([val[0].startOf("year"), val[1].endOf("year")]);
+        } else if (timeType === "month") {
+            setStartEndTime([val[0].startOf("month"), val[1].endOf("month")]);
+        } else {
+            setStartEndTime(val);
+        }
+    };
+
+    const handleAddSubtractTime = (
+        operate: "add" | "subtract",
+        type: "start" | "end"
+    ) => {
+        let start = startEndTime[0];
+        let end = startEndTime[1];
+        if (type === "start") {
+            start =
+                operate === "add"
+                    ? start.add(1, timeType)
+                    : start.subtract(1, timeType);
+        } else {
+            end =
+                operate === "add"
+                    ? end.add(1, timeType)
+                    : end.subtract(1, timeType);
+        }
+
+        setStartEndTime([start, end]);
+    };
+
+    const handleTimeTypeChange = (newVal: any) => {
+        if (!startEndTime) {
+            setTimeType(newVal);
+            return;
+        }
+        const oldVal = timeType;
+        let newStarEndTime = startEndTime;
+        const start = startEndTime[0];
+        const end = startEndTime[1];
+        if (newVal === "year") {
+            newStarEndTime = [start.startOf("year"), end.endOf("year")];
+        }
+        if (newVal === "month") {
+            if (oldVal === "day") {
+                newStarEndTime = [start.startOf("month"), end.endOf("month")];
+            }
+            if (oldVal === "year") {
+                newStarEndTime = [start.startOf("year"), end.endOf("year")];
+            }
+        }
+        if (newVal === "day") {
+            if (oldVal === "month") {
+                newStarEndTime = [start.startOf("month"), end.endOf("month")];
+            }
+
+            if (oldVal === "year") {
+                newStarEndTime = [start.startOf("year"), end.endOf("year")];
+            }
+        }
+        setStartEndTime(newStarEndTime);
+        setTimeType(newVal);
+    };
+
+    const [keyword, setKeyword] = useState<string>();
+    const [showCategoryList, setShowCategoryList] = useState<CategoryType[]>(category);
+    useEffect(() => {
+        if (keyword) {
+            setShowCategoryList(
+                category.filter((item) => item.category.toLowerCase().includes(keyword.toLowerCase()))
+            );
+        } else {
+            setShowCategoryList(category);
+        }
+    }, [keyword, category]);
+
+    const handleClickcCategory = (item: CategoryType) => {
+        setActiveCategory(
+            activeCategory.includes(
+                item.category
+            )
+                ? activeCategory.filter(
+                    (i) =>
+                        i !==
+                        item.category
+                )
+                : activeCategory.concat(
+                    item.category
+                )
+        );
+    }
+
+    return (
+        <>
+            {props.isSimple && (
+                <Space>
+                    {activeCategory?.map((item) => (
+                        <Button
+                            key={item}
+                            size="small"
+                            onClick={() =>
+                                setActiveCategory(
+                                    activeCategory.filter((i) => i !== item)
+                                )
+                            }
+                        >
+                            {item}
+                        </Button>
+                    ))}
+                </Space>
+            )}
+
+            {!props.isSimple && (
+                <div className={styles.filterWrapper}>
+                    <div>
+                        <Space>
+                            <span>类别筛选：</span>
+                            <Input
+                                width={'250px'}
+                                value={keyword}
+                                onChange={e => setKeyword(e.target.value)}
+                                onPressEnter={() => {
+                                    if (showCategoryList.length === 0) {
+                                        return;
+                                    }
+                                    handleClickcCategory(showCategoryList[0]);
+                                }}
+                                placeholder="筛选类别，回车快速选中第一个"
+                            />
+                        </Space>
+                        <Checkbox.Group value={activeCategory}>
+                            <Space wrap>
+                                {showCategoryList?.map((item) => {
+                                    return (
+                                        <Checkbox
+                                            key={item.category}
+                                            value={item.category}
+                                            style={{ color: "white" }}
+                                            onClick={() => {
+                                                console.log(
+                                                    "activeCategory",
+                                                    activeCategory
+                                                );
+                                                handleClickcCategory(item);
+                                            }}
+                                        >
+                                            {item.category} ({item.count})
+                                        </Checkbox>
+                                    );
+                                })}
+                            </Space>
+                        </Checkbox.Group>
+                    </div>
+                    <div>
+                        <div>
+                            <span>时间：</span>
+                            {startEndTime?.[0] && (
+                                <>
+                                    <Button
+                                        icon={<MinusOutlined />}
+                                        onClick={() =>
+                                            handleAddSubtractTime(
+                                                "subtract",
+                                                "start"
+                                            )
+                                        }
+                                    />
+                                    <Button
+                                        icon={<PlusOutlined />}
+                                        onClick={() =>
+                                            handleAddSubtractTime(
+                                                "add",
+                                                "start"
+                                            )
+                                        }
+                                    />
+                                </>
+                            )}
+                            {timeType === "day" && (
+                                <DatePicker.RangePicker
+                                    style={{ width: 250 }}
+                                    value={startEndTime as any}
+                                    onChange={(val) => handleStarEndTime(val)}
+                                    placeholder={["开始时间", "结束时间"]}
+                                    ranges={{
+                                        Today: [dayjs(), dayjs()],
+                                        这周至今: [
+                                            dayjs().startOf("week"),
+                                            dayjs(),
+                                        ],
+                                        一周内: [
+                                            dayjs().subtract(1, "week"),
+                                            dayjs(),
+                                        ],
+                                        这月至今: [
+                                            dayjs().startOf("month"),
+                                            dayjs(),
+                                        ],
+                                        今年至今: [
+                                            dayjs().startOf("year"),
+                                            dayjs(),
+                                        ],
+                                    }}
+                                />
+                            )}
+                            {timeType === "month" && (
+                                <DatePicker.RangePicker
+                                    style={{ width: 200 }}
+                                    picker="month"
+                                    value={startEndTime as any}
+                                    onChange={(val) => handleStarEndTime(val)}
+                                    placeholder={["开始时间", "结束时间"]}
+                                    ranges={{
+                                        这个月: [
+                                            dayjs().startOf("month"),
+                                            dayjs().endOf("month"),
+                                        ],
+                                        上个月: [
+                                            dayjs()
+                                                .startOf("month")
+                                                .subtract(1, "month"),
+                                            dayjs()
+                                                .endOf("month")
+                                                .subtract(1, "month"),
+                                        ],
+                                        上上个月: [
+                                            dayjs()
+                                                .startOf("month")
+                                                .subtract(2, "month"),
+                                            dayjs()
+                                                .endOf("month")
+                                                .subtract(2, "month"),
+                                        ],
+                                    }}
+                                />
+                            )}
+                            {timeType === "year" && (
+                                <DatePicker.RangePicker
+                                    style={{ width: 200 }}
+                                    picker="year"
+                                    value={startEndTime as any}
+                                    onChange={(val) => handleStarEndTime(val)}
+                                    placeholder={["开始时间", "结束时间"]}
+                                    ranges={{
+                                        今年: [
+                                            dayjs().startOf("year"),
+                                            dayjs().endOf("year"),
+                                        ],
+                                        去年: [
+                                            dayjs()
+                                                .startOf("year")
+                                                .subtract(1, "y"),
+                                            dayjs()
+                                                .endOf("year")
+                                                .subtract(1, "y"),
+                                        ],
+                                        前年: [
+                                            dayjs()
+                                                .startOf("year")
+                                                .subtract(2, "y"),
+                                            dayjs()
+                                                .endOf("year")
+                                                .subtract(2, "y"),
+                                        ],
+                                    }}
+                                />
+                            )}
+                            {startEndTime?.[1] && (
+                                <>
+                                    <Button
+                                        icon={<MinusOutlined />}
+                                        onClick={() => {
+                                            handleAddSubtractTime(
+                                                "subtract",
+                                                "end"
+                                            );
+                                        }}
+                                    />
+                                    <Button
+                                        icon={<PlusOutlined />}
+                                        onClick={() => {
+                                            handleAddSubtractTime("add", "end");
+                                        }}
+                                    />
+                                </>
+                            )}
+                        </div>
+                        <Space style={{ marginTop: 8, paddingLeft: 42 }}>
+                            <Radio.Group
+                                value={timeType}
+                                onChange={(val) => {
+                                    handleTimeTypeChange(val.target.value);
+                                }}
+                            >
+                                <Radio.Button value={"year"}>年</Radio.Button>
+                                <Radio.Button value={"month"}>月</Radio.Button>
+                                <Radio.Button value={"day"}>日</Radio.Button>
+                            </Radio.Group>
+                            <span>今天是 {dayjs().format("YYYY-MM-DD")}</span>
+                        </Space>
+                    </div>
+
+                    <div>
+                        <span>特殊状态：</span>
+                        <Space className={styles.special} size={[8, 0]}>
+                            <SwitchCompent
+                                type="isTarget"
+                                value={isTarget}
+                                onChange={setIsTarget}
+                            />
+                            <SwitchCompent
+                                type="isNote"
+                                value={isNote}
+                                onChange={setIsNote} />
+
+                            <SwitchCompent
+                                type="isDirectory"
+                                value={isDirectory}
+                                onChange={setisDirectory}
+                            />
+                            {isMe && <SwitchCompent
+                                type="isEncode"
+                                value={isEncode}
+                                onChange={setIsEncode}
+                            />}
+                        </Space>
+                    </div>
+
+                    {/* 批量修改 todo 的 category */}
+                    <ModifyCategory />
+                </div>
+            )}
+        </>
+    );
+};
+
+export default Filter;

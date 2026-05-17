@@ -1,0 +1,51 @@
+import React, { useContext } from "react";
+import { useSelector } from "react-redux";
+import { SortKeyMap } from "../../../component/sort-btn";
+import List from "../../../todo-split-day-list";
+import { RootState } from "../../../rematch";
+import { formatArrayToTimeMap } from "../../../utils";
+import { useSettingsContext } from "@xiaxiazheng/blog-libs";
+import { RenderTodoDescriptionIcon } from "../todo-list";
+import { getToday } from "@/components/header-admin/utils";
+
+interface IProps {
+    onClickTitle?: (key: SortKeyMap) => void;
+    isHideList?: boolean;
+}
+
+const TodoAfter: React.FC<IProps> = ({ onClickTitle, isHideList }) => {
+    const { todoNameMap, todoDescriptionMap } = useSettingsContext();
+
+    const todoLoading = useSelector(
+        (state: RootState) => state.data.todoLoading
+    );
+
+    const todoList = useSelector((state: RootState) => state.data.todoList);
+
+    if (!todoList.filter((item) => item.time > getToday().format("YYYY-MM-DD")).length) {
+        return null;
+    }
+
+    return (
+        <List
+            loading={todoLoading}
+            sortKey={SortKeyMap.after}
+            key="after"
+            title={
+                <>
+                    {todoNameMap?.["after"]}
+                    <RenderTodoDescriptionIcon
+                        title={todoDescriptionMap?.["after"]}
+                    />{" "}
+                </>
+            }
+            onClickTitle={onClickTitle}
+            isHideList={isHideList}
+            mapList={formatArrayToTimeMap(
+                todoList.filter((item) => item.time > getToday().format("YYYY-MM-DD"))
+            )}
+        />
+    );
+};
+
+export default TodoAfter;

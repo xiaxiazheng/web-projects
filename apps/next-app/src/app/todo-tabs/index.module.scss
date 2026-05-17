@@ -1,0 +1,46 @@
+.main {
+    padding: 0 10px;
+}
+
+.title {
+    margin: 16px 0;
+    padding: 10px 0 5px 0;
+    border-bottom: 2px solid #a6adb4;
+}
+
+.todo {
+    // padding-bottom: 10px;
+}
+
+.search {
+    margin-top: 10px;
+}
+
+.beforeToday {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    padding: 5px 0;
+    border: 1px solid #ccc;
+}
+
+.time {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    padding-bottom: 3px;
+    border-bottom: 1px solid #a6adb4;
+    color: #1677ff;
+    font-size: 18px;
+}
+
+.todoHome {
+    :global(.ant-tabs-tab .anticon) {
+        margin-right: 0;
+    }
+    .content {
+        overflow-y: auto;
+    }
+}

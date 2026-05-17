@@ -1,0 +1,36 @@
+.timepicker {
+    .time {
+        color: #a6adb4;
+        padding: 0 20px;
+    }
+    // button {
+    //     &:hover, &:active {
+    //         color: #a6adb4 !important;
+    //         border-color: #d9d9d9 !important;
+    //     }
+    //     // &.active {
+    //     //     color: #4096ff !important;
+    //     //     border-color: #4096ff !important;
+    //     // }
+    // }
+}
+
+button {
+    &.Yesterday {
+        background-color: #f5222d !important;
+        border-color: #f5222d;
+        color: white !important;
+    }
+
+    &.Today {
+        background-color: #40a9ff !important;
+        border-color: #40a9ff;
+        color: white !important;
+    }
+
+    &.Tomorrow {
+        background-color: #20d420 !important;
+        border-color: #20d420;
+        color: white !important;
+    }
+}

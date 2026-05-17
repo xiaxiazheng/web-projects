@@ -1,0 +1,30 @@
+.main {
+    padding: 0 10px;
+}
+
+.title {
+    margin: 16px 0;
+    padding: 10px 0 5px 0;
+    border-bottom: 2px solid #a6adb4;
+}
+
+.todo {
+    padding-bottom: 30px;
+}
+
+.search {
+    margin-bottom: 15px;
+}
+
+.todo :global(.ant-input) {
+    color: #a6adb4;
+    background-color: #001529;
+}
+.todo :global(.ant-input::placeholder) {
+    color: #a6adb4;
+    background-color: #001529;
+}
+.todo :global(.ant-input-affix-wrapper) {
+    color: #a6adb4;
+    background-color: #001529;
+}

@@ -1,0 +1,71 @@
+.result {
+    max-height: 50vh;
+}
+
+.label {
+    font-weight: bold;
+    color: #8e9ba8;
+}
+
+.search {
+    margin: 10px;
+    text-align: right;
+}
+
+.h2 {
+    display: flex;
+    justify-content: space-between;
+}
+
+.content {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    height: 80vh;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.config {
+    margin-bottom: 20px;
+}
+
+.target {
+    font-size: 20px;
+    text-align: center;
+}
+
+.renderTime {
+    display: flex;
+    justify-content: center;
+    font-size: 76px;
+    font-weight: 600;
+}
+
+.operator {
+    display: flex;
+    justify-content: center;
+}
+
+.progress {
+    opacity: 0.5;
+    margin-inline-end: 0;
+    :global(.ant-progress-inner) {
+        background-color: #a6adb4;
+    }
+}
+
+.history {
+    display: flex;
+    >div:first-child {
+        padding-top: 8px;
+    }
+    // :global {
+    //     .ant-btn {
+    //         color: #a6adb4;
+    //     }
+    //     .ant-btn-text:not(:disabled):hover {
+    //         color: #a6adb4;
+    //     }
+    // }
+}

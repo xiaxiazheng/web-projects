@@ -1,0 +1,46 @@
+.cmd {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    text-align: left;
+    .result {
+        height: calc(100vh - 16px - 280px);
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        overflow: auto;
+        font-size: 12px;
+        white-space: pre;
+    }
+    .operator {
+        display: flex;
+        justify-content: space-between;
+        margin: 10px 0 5px;
+    }
+    .input {
+        font-size: 16px;
+    }
+    .script {
+        max-height: 70vh;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        white-space: pre-wrap;
+        overflow-x: auto;
+        .scriptItem {
+            padding: 5px 10px;
+            border-bottom: 1px solid #ccc;
+            &:last-child {
+                border-bottom: unset;
+            }
+            &:hover {
+                cursor: pointer;
+                background-color: rgba(255, 255, 255, 0.2);
+            }
+        }
+    }
+}
+.cmd :global(textarea.ant-input) {
+    color: #a6adb4;
+    background-color: #001529;
+}

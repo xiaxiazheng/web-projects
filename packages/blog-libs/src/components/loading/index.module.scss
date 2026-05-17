@@ -1,0 +1,13 @@
+.loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  background-color: var(--bg_color_mask, rgba(230, 247, 255, 0.18039215686));
+  >img {
+    width: 100%;
+    height: 100%;
+  }
+}

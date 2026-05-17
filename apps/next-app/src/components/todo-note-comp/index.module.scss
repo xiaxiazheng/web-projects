@@ -1,0 +1,159 @@
+.note {
+    color: #a6adb4;
+    span {
+        vertical-align: middle;
+    }
+}
+
+.item_time {
+    padding: 6px 0 2px;
+    color: #4ad5ba;
+}
+
+.description {
+    font-size: 12px;
+}
+
+.h2 {
+    display: flex;
+    justify-content: space-between;
+}
+
+.search {
+    margin-bottom: 15px;
+}
+
+.content {
+    height: calc(100vh - 16px - 180px);
+    margin-bottom: 20px;
+    overflow-y: auto;
+    .list {
+        column-count: 1;
+        column-gap: 6px;
+        width: 100%;
+        padding-bottom: 60px;
+        .list_item {
+            -webkit-column-break-inside: avoid;
+            width: 100%;
+            margin-bottom: 6px;
+            padding: 5px 7px 0;
+            font-size: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 4px;
+            box-sizing: border-box;
+            &.active {
+                border-color: #0c5295;
+            }
+        }
+    }
+}
+.content :global(.ant-radio-wrapper) {
+    color: #a6adb4;
+}
+
+.category {
+    position: fixed;
+    bottom: 20px;
+    right: 70px;
+    opacity: 0.5;
+}
+
+.modalContent {
+    // max-height: calc(100vh - 16px - 200px);
+    // overflow-y: auto;
+}
+
+.imgFileList {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 80px);
+    justify-content: flex-start;
+    grid-row-gap: 8px;
+    grid-column-gap: 7px;
+    margin: 7px 0 5px;
+}
+
+.note_cont {
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 10;
+    word-break: break-all;
+    &.active {
+        -webkit-line-clamp: unset;
+    }
+    > div:first-child {
+        border-bottom: 1px solid #ccc;
+        margin-bottom: 3px;
+        padding-bottom: 5px;
+    }
+}
+
+.note :global(.ant-form-item-label > label) {
+    color: #a6adb4;
+}
+.note :global(.ant-radio-wrapper) {
+    color: #a6adb4;
+}
+.note :global(.ant-input) {
+    color: #a6adb4;
+    background-color: #001529;
+}
+.note :global(.ant-input-affix-wrapper) {
+    color: #a6adb4;
+    background-color: #001529;
+}
+
+.note :global(.ant-pagination-jump-next .ant-pagination-item-container .ant-pagination-item-ellipsis) {
+    color: #a6adb4;
+}
+.note :global(.ant-pagination-prev) {
+    color: #a6adb4;
+}
+.note :global(.ant-pagination-next) {
+    color: #a6adb4;
+}
+.note :global(.ant-pagination-jump-prev) {
+    color: #a6adb4;
+}
+.note :global(.ant-pagination-jump-next) {
+    color: #a6adb4;
+}
+.note :global(.ant-pagination-prev button) {
+    color: #a6adb4;
+}
+.note :global(.ant-pagination-next button) {
+    color: #a6adb4;
+}
+.note :global(.ant-pagination-item a) {
+    color: #a6adb4;
+}
+.note :global(.ant-pagination-jump-prev .ant-pagination-item-container .ant-pagination-item-ellipsis) {
+    color: #a6adb4;
+}
+.note :global(.ant-pagination-jump-next .ant-pagination-item-container .ant-pagination-item-ellipsis) {
+    color: #a6adb4;
+}
+.note :global(.ant-pagination-disabled .ant-pagination-item-link) {
+    color: #a6adb4;
+}
+.note :global(.ant-pagination-item-active) {
+    background-color: #001529;
+}
+
+.pagination {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #0c5293;
+    padding-bottom: 30px;
+    padding-top: 7px;
+}
+
+.drawerWrapper {
+    :global(.ant-drawer-header) {
+        padding: 10px 12px;
+    }
+}

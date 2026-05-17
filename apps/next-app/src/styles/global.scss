@@ -1,0 +1,13 @@
+html {
+    overflow: hidden;
+    height: calc(100% - 20px);
+    color: #a6adb4;
+    background-color: #001529;
+    padding: 12px 8px 8px;
+    body {
+        margin: 0;
+    }
+    span {
+        vertical-align: middle;
+    }
+}

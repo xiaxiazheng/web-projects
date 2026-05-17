@@ -1,0 +1,8 @@
+.imgBox {
+    display: flex;
+    justify-content: safe center;
+    align-items: safe center;
+    height: calc(100vh - 180px);
+    overflow: auto;
+    position: relative;
+}

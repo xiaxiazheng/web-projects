@@ -1,0 +1,89 @@
+.music {
+    position: relative;
+    padding: 8px 0;
+    .musicList {
+        height: calc(100vh - 272px);
+        overflow-y: auto;
+        bottom: 2px;
+        border-radius: 4px;
+        box-sizing: border-box;
+        z-index: 1;
+        font-size: 16px;
+        > span {
+            display: block;
+            padding: 8px 6px;
+            border-bottom: 1px solid #333d45;
+            cursor: pointer;
+            &.active {
+                color: #40a9ff;
+                background-color: #333d45;
+            }
+            &:hover {
+                color: white;
+                background-color: #333d45;
+            }
+        }
+    }
+    .search {
+        padding: 8px 0;
+        background-color: #001529;
+    }
+    .box {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: #1b3c57;
+        // z-index: 2;
+        text-align: center;
+        padding-bottom: 20px;
+        .musicBox {
+            padding: 10px;
+            height: 32px;
+            > audio {
+                width: 100%;
+                height: 100%;
+                &:focus {
+                    outline: unset;
+                }
+            }
+        }
+    }
+}
+
+.songIndex {
+    color: #6196c0;
+    font-size: 10px;
+    display: inline-block;
+    vertical-align: text-bottom;
+    width: 19px;
+}
+
+.playingName {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    vertical-align: middle;
+    font-size: 16px;
+    width: 100%;
+    padding: 4px 5px;
+    > span {
+        display: inline-block;
+        min-width: 216px;
+        animation: scroll 4s infinite alternate-reverse ease-in-out;
+    }
+}
+.iconBox {
+    position: relative;
+    padding: 0 0 5px;
+}
+.playIcon {
+    font-size: 18px;
+    margin: 0 8px;
+    vertical-align: middle;
+    cursor: pointer;
+    &.active {
+        color: #40a9ff;
+    }
+}
+

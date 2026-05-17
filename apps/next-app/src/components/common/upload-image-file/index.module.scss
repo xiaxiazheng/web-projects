@@ -1,0 +1,53 @@
+.upload_wrapper {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    margin-right: 5px;
+    margin-top: 5px;
+    vertical-align: top;
+
+    .upload {
+        width: 100%;
+        height: 100%;
+
+        :global(.ant-upload.ant-upload-select) {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            color: #a6adb4;
+            background-color: #001529;
+        }
+
+        :global(.ant-upload.ant-upload-select > .ant-upload) {
+            flex-direction: column;
+        }
+
+        :global(.ant-upload) {
+            color: #a6adb4;
+            font-size: 12px;
+            padding: 0 5px;
+        }
+    }
+}
+
+.progress {
+    :global(.ant-progress-text) {
+        color: #a6adb4;
+    }
+
+    :global(.ant-progress-inner) {
+        background-color: #a6adb4;
+    }
+
+    .progressBar {
+        width: 74vw;
+    }
+}
+
+.name {}
+
+.addIcon {
+    display: block;
+    font-size: 24px;
+}

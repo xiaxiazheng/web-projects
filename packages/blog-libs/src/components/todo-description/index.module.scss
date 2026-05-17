@@ -1,0 +1,11 @@
+.descList {
+  .desc {
+      word-break: break-all;
+      border-bottom: 1px solid #cccccc80;
+      box-sizing: border-box;
+      padding: 5px;
+      &:last-child {
+          border-bottom: none;
+      }
+  }
+}

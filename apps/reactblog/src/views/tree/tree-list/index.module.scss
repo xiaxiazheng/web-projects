@@ -1,0 +1,47 @@
+.treeFilter {
+    background: var(--bg_color);
+    box-sizing: border-box;
+    border-bottom: 1px solid var(--border_color);
+    overflow: hidden;
+    .treeFilterInput {
+        width: calc(100% - 1.4rem);
+        height: 40px;
+        margin: 4px 0.7rem;
+    }
+    :global(.ant-input) {
+        letter-spacing: 1px;
+        font-size: 15px;
+        border: none;
+        box-shadow: none;
+    }
+
+    :global(.ant-input-suffix) {
+        right: 6px;
+    }
+    :global {
+        .ant-input-affix-wrapper {
+            border-color: transparent;
+        }
+    }
+}
+
+.treeMenu {
+    height: calc(100% - 49px);
+
+    .hiddenFirstLevel {
+        > :global(.ant-menu-submenu-title) {
+            display: none;
+        }
+    }
+
+    .addRootTreenode {
+        &:hover {
+            color: var(--color_active);
+        }
+    }
+
+    :global(li) {
+        color: var(--color);
+        background-color: unset;
+    }
+}

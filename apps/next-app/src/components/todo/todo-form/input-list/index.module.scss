@@ -1,0 +1,27 @@
+.inputItem {
+    position: relative;
+
+    .iconWrapper {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+        padding: 5px 0;
+
+        .deleteIcon {
+            font-size: 16px;
+            cursor: pointer;
+            z-index: 1;
+        }
+    }
+}
+
+.inputTextArea {
+    :global(input),
+    :global(textarea) {
+        // 禁止选中，用来屏蔽 H5 输入过程中错乱的问题
+        -webkit-user-select: text;
+    }
+
+    // 禁止选中，用来屏蔽 H5 输入过程中错乱的问题
+    -webkit-user-select: text;
+}

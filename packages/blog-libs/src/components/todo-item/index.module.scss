@@ -1,0 +1,23 @@
+.icon {
+    margin-left: 5px;
+}
+
+.todoItem {
+    color: var(--color);
+}
+
+.nameTime {
+    color: #9b9b9b;
+    font-size: 12px;
+    .nameTimetToday {
+        color: #1890ff;
+    }
+
+    .nameTimePreviously {
+        /* color: red; */
+    }
+
+    .nameTimeFuture {
+        color: #52d19c;
+    }
+}

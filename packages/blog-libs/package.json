@@ -1,0 +1,53 @@
+{
+  "name": "@xiaxiazheng/blog-libs",
+  "version": "0.0.26",
+  "type": "module",
+  "main": "dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rslib build",
+    "watch": "rslib build --watch",
+    "publish": "npm login|npm publish",
+    "init": "yalc publish",
+    "patch": "node ./patch.js",
+    "push": "yalc push --watch"
+  },
+  "dependencies": {
+    "hammerjs": "^2.0.8",
+    "highlight.js": "^11.2.0",
+    "markdown-it": "^12.0.2"
+  },
+  "devDependencies": {
+    "@ant-design/icons": "^6.1.0",
+    "@rsbuild/plugin-react": "^1.4.0",
+    "@rsbuild/plugin-sass": "^1.4.0",
+    "@rslib/core": "^0.13.3",
+    "@types/hammerjs": "^2.0.46",
+    "@types/markdown-it": "^14.1.2",
+    "@types/node": "^24.5.2",
+    "@types/react": "^19.1.13",
+    "antd": "^6.2.2",
+    "dayjs": "^1.11.11",
+    "react": "^19.1.1",
+    "typescript": "^5.9.2"
+  },
+  "peerDependencies": {
+    "@ant-design/icons": ">=6.1.0",
+    "antd": ">=6.0.0",
+    "dayjs": ">=1.11.0",
+    "react": ">=16.9.0",
+    "react-dom": ">=16.9.0"
+  },
+  "repository": "https://github.com/xiaxiazheng/blog-libs.git",
+  "author": "xiaxiazheng <13075218875@163.com>",
+  "license": "MIT"
+}
